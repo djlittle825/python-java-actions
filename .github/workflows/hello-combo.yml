@@ -1,0 +1,33 @@
+name: Python + Node.js Greeting Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Your name'
+        required: true
+        default: 'World'
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Greet with Python
+        run: python hello.py "${{ github.event.inputs.name }}"
+
+      - name: Greet with Node.js
+        run: node hello.js "${{ github.event.inputs.name }}"
